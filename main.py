@@ -27,23 +27,6 @@ app.middleware("http")(
     )
 )
 
-# Apply payment middleware to premium routes
-app.middleware("http")(
-    require_payment(
-        path="/premium/*",
-        price=TokenAmount(
-            amount="10000",
-            asset=TokenAsset(
-                address="0x036CbD53842c5426634e7929541eC2318f3dCF7e",
-                decimals=6,
-                eip712=EIP712Domain(name="USDC", version="2"),
-            ),
-        ),
-        pay_to_address=ADDRESS,
-        network="base-sepolia",
-    )
-)
-
 
 @app.get("/weather")
 async def get_weather() -> Dict[str, Any]:
@@ -52,13 +35,6 @@ async def get_weather() -> Dict[str, Any]:
             "weather": "sunny",
             "temperature": 70,
         }
-    }
-
-
-@app.get("/premium/content")
-async def get_premium_content() -> Dict[str, Any]:
-    return {
-        "content": "This is premium content",
     }
 
 
